@@ -1,0 +1,17 @@
+E:\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.exe
+E:\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.deps.json
+E:\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.runtimeconfig.json
+E:\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.dll
+E:\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.pdb
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.csproj.AssemblyReference.cache
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto_1.Analizador_Lexico.resources
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.csproj.GenerateResource.cache
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.GeneratedMSBuildEditorConfig.editorconfig
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.AssemblyInfoInputs.cache
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.AssemblyInfo.cs
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.csproj.CoreCompileInputs.cache
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.dll
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\refint\Subproducto 1.dll
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.pdb
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.genruntimeconfig.cache
+E:\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\ref\Subproducto 1.dll
