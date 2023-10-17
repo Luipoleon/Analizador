@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics.Eventing.Reader;
 using System.Text.RegularExpressions;
 
 namespace analizador
@@ -30,7 +31,8 @@ namespace analizador
             { (int)TokenType.IDENTIFICADOR, "IDENTIFICADOR" },
             { (int)TokenType.ENTERO, "ENTERO" },
             { (int)TokenType.DECIMAL, "DECIMAL" },
-            { (int)TokenType.FIN_DE_ARCHIVO, "EOF" }
+            { (int)TokenType.FIN_DE_ARCHIVO, "EOF" },
+            { (int)TokenType.FIN_DE_CADENA, "FIN DE CADENA" }
         };
 
 
@@ -229,7 +231,14 @@ namespace analizador
                         #endregion
                     }
                     #endregion
-
+                    #region FIN DE LINEA
+                    else if (input[i].Equals('$')){
+                        #region fin_linea
+                        token.Lexema += input[i];
+                        token.Valor = (int)TokenType.FIN_DE_CADENA;
+                        #endregion
+                    }
+                    #endregion
                     else if (input[i].Equals('\0'))
                     {
                         #region FIN
@@ -262,14 +271,13 @@ namespace analizador
         #region Función saltar espacios
         private static int SaltarEspacios(string input, int i)
         {
-            while (char.IsSeparator(input[i]) || Regex.IsMatch(input[i].ToString(),@"[\n\t\r\b\v]"))
+            while (char.IsSeparator(input[i]) || Regex.IsMatch(input[i].ToString(), @"[\n\t\r\b\v]"))
             {
                 i++;
             }
             return i;
         }
         #endregion
-
-
     }
 }
+        

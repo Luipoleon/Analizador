@@ -34,7 +34,10 @@
         DECIMAL,//19
 
         // Fin de archivo
-        FIN_DE_ARCHIVO//20,
+        FIN_DE_ARCHIVO,//20,
+
+        // Fin de cadena
+        FIN_DE_CADENA//21
     }
 
     #endregion
