@@ -37,7 +37,10 @@
         FIN_DE_ARCHIVO,//20,
 
         // Fin de cadena
-        FIN_DE_CADENA//21
+        FIN_DE_CADENA,//21
+
+        // Tipo de dato
+        TIPO_DATO //22
     }
 
     #endregion

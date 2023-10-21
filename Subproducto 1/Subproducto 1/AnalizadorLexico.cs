@@ -32,7 +32,8 @@ namespace analizador
             { (int)TokenType.ENTERO, "ENTERO" },
             { (int)TokenType.DECIMAL, "DECIMAL" },
             { (int)TokenType.FIN_DE_ARCHIVO, "EOF" },
-            { (int)TokenType.FIN_DE_CADENA, "FIN DE CADENA" }
+            { (int)TokenType.FIN_DE_CADENA, "FIN DE CADENA" },
+            { (int)TokenType.TIPO_DATO, "TIPO DE DATO" },
         };
 
 
@@ -115,7 +116,19 @@ namespace analizador
                         //ID
                         if (token.Valor == 0)
                         {
-                            token.Valor = (int)TokenType.IDENTIFICADOR;
+                            string lexema = token.Lexema.ToUpper();
+                            if (lexema == "INT" || lexema == "FLOAT" || lexema == "STRING" || lexema == "BOOL")
+                            {
+                                token.Valor = (int)TokenType.TIPO_DATO;
+                                Console.WriteLine("lexema");
+                                
+                            }
+                            else
+                            {
+                                token.Valor = (int)TokenType.IDENTIFICADOR;
+                            }
+                               
+                        
                         }
                         //Regresar al elemento anterior
                         i--;
