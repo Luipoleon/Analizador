@@ -29,6 +29,7 @@ namespace Subproducto_1
             
             dataGridTokens.Update();
 
+
             //LLamada a analizador sintactico
             Stack<string> pila = AnalizadorSintactico.Sintactico(listTokens);
             string input1 = textBox1.Text.Trim();
