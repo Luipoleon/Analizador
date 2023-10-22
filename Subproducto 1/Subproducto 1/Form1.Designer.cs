@@ -35,6 +35,7 @@
             Token = new DataGridViewTextBoxColumn();
             TextBox_Analizador = new TextBox();
             textBox1 = new TextBox();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridTokens).BeginInit();
             SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             TextBox_Analizador.Margin = new Padding(3, 4, 3, 4);
             TextBox_Analizador.Multiline = true;
             TextBox_Analizador.Name = "TextBox_Analizador";
-            TextBox_Analizador.Size = new Size(1037, 153);
+            TextBox_Analizador.Size = new Size(923, 153);
             TextBox_Analizador.TabIndex = 2;
             // 
             // textBox1
@@ -100,11 +101,22 @@
             textBox1.Size = new Size(537, 369);
             textBox1.TabIndex = 3;
             // 
+            // button1
+            // 
+            button1.Location = new Point(943, 84);
+            button1.Name = "button1";
+            button1.Size = new Size(108, 29);
+            button1.TabIndex = 4;
+            button1.Text = "Abrir archivo";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // Analizador_Lexico
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1063, 600);
+            Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(TextBox_Analizador);
             Controls.Add(dataGridTokens);
@@ -126,5 +138,6 @@
         private DataGridViewTextBoxColumn Token;
         private TextBox TextBox_Analizador;
         private TextBox textBox1;
+        private Button button1;
     }
 }
