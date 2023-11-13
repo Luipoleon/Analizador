@@ -35,10 +35,10 @@ namespace Subproducto_1
             Stack<string>[] errores = AnalizadorSintactico.Sintactico(listTokens);
             Stack<string> pilaSemantico = errores[0];
             Stack<string> pilaSintactico = errores[1];
-            
+
             UpdateErrorText(pilaSemantico, textBox1);
             UpdateErrorText2(pilaSintactico, textBox2);
-            
+
         }
 
         private void UpdateErrorText(Stack<string> pila, TextBox textBox)
@@ -47,7 +47,7 @@ namespace Subproducto_1
             textBox.Text = "";
             if (pila.Count == 1)
             {
-                textBox.Text = "Se esperaba un simbolo de cierre en la fila: " + pila.Pop();
+                textBox.Text = "Se esperaba un simbolo de cierre en la fila " + pila.Pop();
 
             }
             else if (pila.Count == 2)

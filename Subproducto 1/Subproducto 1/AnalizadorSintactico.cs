@@ -17,6 +17,7 @@ namespace Subproducto_1
             Stack<string>[] errores = new Stack<string>[2];
             errores[0] = pila;
             errores[1] = analizadorSemantico.PilaErrores;
+            bool llaveCerrada = true;
 
             int linea = 1;
             for (int i = 0; i < lexico.Count; i++)
@@ -28,35 +29,41 @@ namespace Subproducto_1
                     i++;
                     if (lexico[i].Valor == 17)
                     {
+                        #region Variable semántico id 
                         string id = lexico[i].Lexema;
+                        #endregion
                         i++;
                         if (lexico[i].Lexema == "=")
                         {
                             i++;
                             if (lexico[i].Valor == 18 | lexico[i].Valor == 17)
                             {
+                                #region Variables semántico valor asignado y tipo ID o INT
                                 int tipoValorAsignado = lexico[i].Valor;
                                 string valorAsignado = lexico[i].Lexema;
+                                #endregion
                                 i++;
                                 if (lexico[i].Valor == 21)
                                 {
-
-                                    if(tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
+                                    #region Verificación semántica
+                                    if (tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
                                     {
-                                        if (analizadorSemantico.VerificarAsignacion(valorAsignado, linea)){
-                                            analizadorSemantico.AgregarSimbolo(id,"INT",valorAsignado,linea);
+                                        string[] tiposValidos = { "int" };
+                                        if (analizadorSemantico.VerificarID(valorAsignado, linea, tiposValidos)){
+                                            analizadorSemantico.AgregarSimbolo(id,"int",valorAsignado,linea);
                                         }
                                     }
                                     else
                                     {
-                                        analizadorSemantico.AgregarSimbolo(id, "INT", valorAsignado, linea);
+                                        analizadorSemantico.AgregarSimbolo(id, "int", valorAsignado, linea);
                                     }
+                                    #endregion
                                     linea++;
                                 }
                                 else
                                 {
                                     pila.Push(linea.ToString());
-                                    pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                    pila.Push("Se esperaba el lexema: ;\n En su lugar se obtuvo: " + lexico[i].Lexema);
                                     return errores;
                                 }
                             }
@@ -70,7 +77,7 @@ namespace Subproducto_1
                         else
                         {
                             pila.Push(linea.ToString());
-                            pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                            pila.Push("Se esperaba el lexema: ;\n En su lugar se obtuvo: " + lexico[i].Lexema);
                             return errores;
                         }
                     }
@@ -88,15 +95,36 @@ namespace Subproducto_1
                     i++;
                     if (lexico[i].Valor == 17)
                     {
+                        #region Variable semántico id 
+                        string id = lexico[i].Lexema;
+                        #endregion
                         i++;
                         if (lexico[i].Lexema == "=")
                         {
                             i++;
                             if (lexico[i].Valor == 19 | lexico[i].Valor == 17)
                             {
+                                #region Variables semántico valor asignado y tipo ID o FLOAT
+                                int tipoValorAsignado = lexico[i].Valor;
+                                string valorAsignado = lexico[i].Lexema;
+                                #endregion
                                 i++;
                                 if (lexico[i].Valor == 21)
                                 {
+                                    #region Verificación semántica
+                                    if (tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
+                                    {
+                                        string[] tiposValidos = { "float" };
+                                        if (analizadorSemantico.VerificarID(valorAsignado, linea, tiposValidos))
+                                        {
+                                            analizadorSemantico.AgregarSimbolo(id, "float", valorAsignado, linea);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        analizadorSemantico.AgregarSimbolo(id, "float", valorAsignado, linea);
+                                    }
+                                    #endregion
                                     linea++;
                                 }
                                 else
@@ -137,18 +165,29 @@ namespace Subproducto_1
                         i++;
                         if (lexico[i].Valor == 17 | lexico[i].Valor == 18 | lexico[i].Valor == 19)
                         {
+                            #region Variable lexico 1 Semántico
+                            Token lexico1 = lexico[i];
+                            #endregion
                             i++;
                             if (lexico[i].Valor == 6 | lexico[i].Valor == 8)
                             {
                                 i++;
                                 if (lexico[i].Valor == 17 | lexico[i].Valor == 18 | lexico[i].Valor == 19)
                                 {
+                                    #region Variable lexico 2 Semántico
+                                    Token lexico2 = lexico[i];
+                                    #endregion
+                                    #region Comparar tipos de Valores Semántico
+                                    analizadorSemantico.VerificarTiposIguales(lexico1, lexico2, linea);
+                                    #endregion
+
                                     i++;
                                     if (lexico[i].Valor == 10)
                                     {
                                         i++;
                                         if (lexico[i].Valor == 13)
                                         {
+                                            llaveCerrada = false;
                                             pila.Push(lexico[i].Lexema);
                                         }
                                         else
@@ -197,28 +236,48 @@ namespace Subproducto_1
                 #region Cierre de llave
                 else if (lexico[i].Valor == 14)
                 {
-                    pila.Pop();
+
+                    if(pila.Count > 0 && !llaveCerrada)
+                    {
+                        pila.Pop();
+                        llaveCerrada = true;
+                    }
+                    else
+                    {
+                        pila.Push(linea.ToString());
+                        pila.Push("Epresión inválida: " + lexico[i].Lexema );
+                        return errores;
+                    }
+                  
                 }
                 #endregion
                 #region Logicos, Aritmeticos, Asignacion, relacionales
                 else if (lexico[i].Valor == 17 | lexico[i].Valor == 18 | lexico[i].Valor == 19)
                 {
+                    #region Variable léxico 1 Semántico
+                    Token lexico1 = lexico[i];
+                    #endregion
                     i++;
                     if (lexico[i].Valor == 5 | lexico[i].Valor == 6 | lexico[i].Valor == 7 | lexico[i].Valor == 8)
                     {
                         i++;
                         if (lexico[i].Valor == 17 | lexico[i].Valor == 18 | lexico[i].Valor == 19)
                         {
+                            #region Variable léxico 1 Semántico
+                            Token lexico2 = lexico[i];
+                            #endregion
+                            #region Verificar tipos de datos iguales
+                            analizadorSemantico.VerificarTiposIguales(lexico1, lexico2, linea);
+                            #endregion
                             i++;
                             if (lexico[i].Valor == 21)
                             {
-                                i++;
                                 linea++;
                             }
                             else
                             {
                                 pila.Push(linea.ToString());
-                                pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                pila.Push("Se esperaba el lexema: ;\n En su lugar se obtuvo: " + lexico[i].Lexema);
                                 return errores;
                             }
                         }
