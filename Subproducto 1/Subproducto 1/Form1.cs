@@ -1,10 +1,12 @@
 using analizador;
+using System.Runtime.CompilerServices;
+
 namespace Subproducto_1
 {
-    public partial class Analizador_Lexico : Form
+    public partial class Analizador : Form
     {
 
-        public Analizador_Lexico()
+        public Analizador()
         {
             InitializeComponent();
 
@@ -30,25 +32,50 @@ namespace Subproducto_1
             dataGridTokens.Update();
 
             //LLamada a analizador sintactico
-            Stack<string> pila = AnalizadorSintactico.Sintactico(listTokens);
-            string input1 = textBox1.Text.Trim();
-            textBox1.Text = "";
+            Stack<string>[] errores = AnalizadorSintactico.Sintactico(listTokens);
+            Stack<string> pilaSemantico = errores[0];
+            Stack<string> pilaSintactico = errores[1];
+            
+            UpdateErrorText(pilaSemantico, textBox1);
+            UpdateErrorText2(pilaSintactico, textBox2);
+            
+        }
+
+        private void UpdateErrorText(Stack<string> pila, TextBox textBox)
+        {
+            textBox.Text.Trim();
+            textBox.Text = "";
             if (pila.Count == 1)
             {
-                textBox1.Text = "Se esperaba un simbolo de cierre en la fila: " + pila.Pop();
+                textBox.Text = "Se esperaba un simbolo de cierre en la fila: " + pila.Pop();
 
             }
             else if (pila.Count == 2)
             {
-                textBox1.Text = pila.Pop() + "\n en la fila: " + pila.Pop();
+                textBox.Text = pila.Pop() + ". \nFila: " + pila.Pop();
             }
             else
             {
-                textBox1.Text = "No se han encontrado errores sintacticos";
+                textBox.Text = "No se han encontrado errores sintácticos";
             }
-            textBox1.Update();
+            textBox.Update();
         }
 
+        private void UpdateErrorText2(Stack<string> pila, TextBox textBox)
+        {
+            textBox.Text.Trim();
+            textBox.Text = "";
+            if (pila.Count >= 1)
+            {
+                textBox.Text = pila.Pop() + ". \nFila: " + pila.Pop();
+
+            }
+            else
+            {
+                textBox.Text = "No se han encontrado errores semánticos";
+            }
+            textBox.Update();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             var fileContent = string.Empty;

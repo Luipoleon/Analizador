@@ -10,55 +10,75 @@ namespace Subproducto_1
     internal static class AnalizadorSintactico
     {
         #region Analizador Sintactico
-        public static Stack<string> Sintactico(List<Token> lexico)
+        public static Stack<string>[] Sintactico(List<Token> lexico)
         {
             Stack<string> pila = new Stack<string>();
+            AnalizadorSemantico analizadorSemantico = new AnalizadorSemantico();
+            Stack<string>[] errores = new Stack<string>[2];
+            errores[0] = pila;
+            errores[1] = analizadorSemantico.PilaErrores;
+
             int linea = 1;
             for (int i = 0; i < lexico.Count; i++)
             {
+
                 #region Entero
                 if (lexico[i].Lexema == "int")
                 {
                     i++;
                     if (lexico[i].Valor == 17)
                     {
+                        string id = lexico[i].Lexema;
                         i++;
                         if (lexico[i].Lexema == "=")
                         {
                             i++;
                             if (lexico[i].Valor == 18 | lexico[i].Valor == 17)
                             {
+                                int tipoValorAsignado = lexico[i].Valor;
+                                string valorAsignado = lexico[i].Lexema;
                                 i++;
                                 if (lexico[i].Valor == 21)
                                 {
+
+                                    if(tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
+                                    {
+                                        if (analizadorSemantico.VerificarAsignacion(valorAsignado, linea)){
+                                            analizadorSemantico.AgregarSimbolo(id,"INT",valorAsignado,linea);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        analizadorSemantico.AgregarSimbolo(id, "INT", valorAsignado, linea);
+                                    }
                                     linea++;
                                 }
                                 else
                                 {
                                     pila.Push(linea.ToString());
                                     pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                    return pila;
+                                    return errores;
                                 }
                             }
                             else
                             {
                                 pila.Push(linea.ToString());
                                 pila.Push("Se esperaba un número entero\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                return pila;
+                                return errores;
                             }
                         }
                         else
                         {
                             pila.Push(linea.ToString());
                             pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                            return pila;
+                            return errores;
                         }
                     }
                     else
                     {
                         pila.Push(linea.ToString());
                         pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                        return pila;
+                        return errores;
                     }
                 }
                 #endregion
@@ -83,28 +103,28 @@ namespace Subproducto_1
                                 {
                                     pila.Push(linea.ToString());
                                     pila.Push("Se esperaba el lexema: {\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                    return pila;
+                                    return errores;
                                 }
                             }
                             else
                             {
                                 pila.Push(linea.ToString());
                                 pila.Push("Se esperaba un decimal\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                return pila;
+                                return errores;
                             }
                         }
                         else
                         {
                             pila.Push(linea.ToString());
                             pila.Push("Se esperaba el lexema: =\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                            return pila;
+                            return errores;
                         }
                     }
                     else
                     {
                         pila.Push(linea.ToString());
                         pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                        return pila;
+                        return errores;
                     }
                     #endregion
                     #region If
@@ -135,42 +155,42 @@ namespace Subproducto_1
                                         {
                                             pila.Push(linea.ToString());
                                             pila.Push("Se esperaba el lexema: {\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                            return pila;
+                                            return errores;
                                         }
                                     }
                                     else
                                     {
                                         pila.Push(linea.ToString());
                                         pila.Push("Se esperaba el lexema: )\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                        return pila;
+                                        return errores;
                                     }
                                 }
                                 else
                                 {
                                     pila.Push(linea.ToString());
                                     pila.Push("Se esperaba un identificador, entero o decimal\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                    return pila;
+                                    return errores;
                                 }
                             }
                             else
                             {
                                 pila.Push(linea.ToString());
                                 pila.Push("Se esperaba un operador logico o relacional\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                return pila;
+                                return errores;
                             }
                         }
                         else
                         {
                             pila.Push(linea.ToString());
                             pila.Push("Se esperaba un tipo de dato\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                            return pila;
+                            return errores;
                         }
                     }
                     else
                     {
                         pila.Push(linea.ToString());
                         pila.Push("Se esperaba el lexema: (\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                        return pila;
+                        return errores;
                     }
                 }
                 #endregion
@@ -199,27 +219,29 @@ namespace Subproducto_1
                             {
                                 pila.Push(linea.ToString());
                                 pila.Push("Se esperaba el lexema: $\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                                return pila;
+                                return errores;
                             }
                         }
                         else
                         {
                             pila.Push(linea.ToString());
                             pila.Push("Se esperaba un numero entero, decimal o un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                            return pila;
+                            return errores;
                         }
                     }
                     else
                     {
                         pila.Push(linea.ToString());
                         pila.Push("Se esperaba un operador logico, aritmetico, de asignacion o relacional\n En su lugar se obtuvo: " + lexico[i].Lexema);
-                        return pila;
+                        return errores;
                     }
                 }
                 #endregion
 
             }
-            return pila;
+
+          
+            return errores;
             #endregion
 
         }

@@ -20,7 +20,6 @@ C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\bin\Debug\net6.0-w
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.runtimeconfig.json
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.dll
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\bin\Debug\net6.0-windows\Subproducto 1.pdb
-C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto_1.Analizador_Lexico.resources
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.csproj.GenerateResource.cache
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.AssemblyInfoInputs.cache
@@ -47,3 +46,4 @@ C:\Users\cesar\OneDrive\Documentos\School\Sem traductores de lenguaje\Sub 2\Anal
 C:\Users\cesar\OneDrive\Documentos\School\Sem traductores de lenguaje\Sub 2\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.pdb
 C:\Users\cesar\OneDrive\Documentos\School\Sem traductores de lenguaje\Sub 2\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto 1.genruntimeconfig.cache
 C:\Users\cesar\OneDrive\Documentos\School\Sem traductores de lenguaje\Sub 2\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\ref\Subproducto 1.dll
+C:\Users\Admin\Desktop\Analizador\Subproducto 1\Subproducto 1\obj\Debug\net6.0-windows\Subproducto_1.Analizador.resources

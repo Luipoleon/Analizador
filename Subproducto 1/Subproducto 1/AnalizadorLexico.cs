@@ -229,13 +229,6 @@ namespace analizador
                         token.Valor = (int)TokenType.CORCHETE_DERECHO;
                         #endregion
                     }
-                    else if (input[i].Equals(';'))
-                    {
-                        #region ;
-                        token.Lexema += input[i];
-                        token.Valor = (int)TokenType.PUNTO_Y_COMA;
-                        #endregion
-                    }
                     else if (input[i].Equals(','))
                     {
                         #region ,
@@ -245,7 +238,7 @@ namespace analizador
                     }
                     #endregion
                     #region FIN DE LINEA
-                    else if (input[i].Equals('$')){
+                    else if (input[i].Equals(';')){
                         #region fin_linea
                         token.Lexema += input[i];
                         token.Valor = (int)TokenType.FIN_DE_CADENA;
