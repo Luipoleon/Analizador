@@ -1,12 +1,4 @@
 ﻿using analizador;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Subproducto_1
 {
@@ -42,9 +34,23 @@ namespace Subproducto_1
         }
         #endregion
 
-        #region VerificarAsignacion
+        #region ValorDeSimboloEsNulo
+        public bool ValorDeSimboloEsNulo(string id, int linea)
+        {
+            string valor = GetSimbolo(id)?.Valor ?? null; 
+            if (valor == null)
+            {
+                AgregarError(linea, "El valor de " + id + " es nulo");
+                return true;
+            }
+            return true;
+        }
+        #endregion
+
+        #region VerificarID
         public bool VerificarID(string id, int linea, string[] tiposValidos)
         {
+
             if (!EstaDefinido(id))
             {
                 AgregarError(linea, "El símbolo \"" + id + "\" no está definido");
@@ -52,7 +58,7 @@ namespace Subproducto_1
             }
             foreach(string t in tiposValidos)
             {
-                if (EsTipoCorrecto(id, t))
+                if (EsTipo(id, t))
                 {
                     return true;
                 }
@@ -61,6 +67,25 @@ namespace Subproducto_1
             AgregarError(linea, "El símbolo \"" + id + "\" no es de tipo [" + string.Join(", ", tiposValidos) +"]");
             return false;
            
+        }
+        #endregion
+
+        #region ActualizarValorSimboloSuma
+        public void ActualizarValorSimbolo(Token lexicoID,  Token lexico1,string operador, Token lexico2)
+        {
+            Simbolo s = GetSimbolo(lexicoID.Lexema);
+            s.Valor = RealizarOperacion(int.Parse(GetValor(lexico1)), 
+                     int.Parse(GetValor(lexico2)), operador).ToString();
+          
+        }
+        #endregion
+
+        #region ActualizarValorSimbolo
+        public void ActualizarValorSimbolo(Token lexico1, Token lexico2)
+        {
+            Simbolo s = GetSimbolo(lexico1.Lexema);
+            s.Valor = GetValor(lexico2);
+
         }
         #endregion
 
@@ -97,12 +122,16 @@ namespace Subproducto_1
         #endregion
 
         #region Métodos privados
+
+        #region AgregarError
         private void AgregarError(int linea, string error)
         {
             pilaErrores.Push(linea.ToString());
             pilaErrores.Push(error);
         }
+        #endregion
 
+        #region GetSimbolo
         private Simbolo GetSimbolo(string id)
         {
             foreach(Simbolo s in tablaSimbolos)
@@ -114,6 +143,7 @@ namespace Subproducto_1
             }
             return null;
         }
+        #endregion
 
         #region EstaDefinido
         private bool EstaDefinido(string id)
@@ -131,7 +161,7 @@ namespace Subproducto_1
         #endregion
 
         #region VerificarTipo
-        private bool EsTipoCorrecto(string id, string tipo)
+        private bool EsTipo(string id, string tipo)
         {
             Simbolo simbolo = GetSimbolo(id);
             if (simbolo.Tipo == tipo)
@@ -143,24 +173,62 @@ namespace Subproducto_1
         }
         #endregion
 
-        #region 
-        private string GetTipo(Token lexico)
+        #region RealizarOperacion;
+        private int RealizarOperacion(int operand1, int operand2, string operadorAritmetico)
         {
-            string tipo;
+            switch (operadorAritmetico)
+            {
+                case "+":
+                    return operand1 + operand2;
+                case "-":
+                    return operand1 - operand2;
+                case "*":
+                    return operand1 * operand2;
+                case "/":
+                    return operand1 / operand2;
+                // Add more cases for other operators as needed
+                default:
+                    throw new ArgumentException("Invalid arithmetic operator");
+            }
+        }
+    
+        #endregion
+
+        #region  GetTipo
+        private string GetTipo(Token lexico)
+            {
+                string tipo;
+                if (lexico.Valor == (int)TokenType.IDENTIFICADOR)
+                {
+                    tipo = GetSimbolo(lexico.Lexema).Tipo;
+                }
+                else if(lexico.Valor == (int)TokenType.ENTERO)
+                {
+                    tipo = "int";
+                }
+                else
+                {
+                    tipo = "float";
+                }
+
+                return tipo;
+            }
+        #endregion
+
+        #region  GetValor
+        private string GetValor(Token lexico)
+        {
+            string valor;
             if (lexico.Valor == (int)TokenType.IDENTIFICADOR)
             {
-                tipo = GetSimbolo(lexico.Lexema).Tipo;
-            }
-            else if(lexico.Valor == (int)TokenType.ENTERO)
-            {
-                tipo = lexico.Lexema = "int";
+                valor = GetSimbolo(lexico.Lexema).Valor;
             }
             else
             {
-                tipo = lexico.Lexema = "float";
+                valor = lexico.Lexema;
             }
 
-            return tipo;
+            return valor;
         }
         #endregion
 

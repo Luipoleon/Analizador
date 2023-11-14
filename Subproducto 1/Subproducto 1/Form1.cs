@@ -65,10 +65,14 @@ namespace Subproducto_1
         {
             textBox.Text.Trim();
             textBox.Text = "";
+
             if (pila.Count >= 1)
             {
-                textBox.Text = pila.Pop() + ". \nFila: " + pila.Pop();
-
+                while (pila.Count > 0)
+                {
+                    textBox.Multiline = true;
+                    textBox.Text += pila.Pop() + ". Fila: " + pila.Pop() + "\r\n";
+                }
             }
             else
             {

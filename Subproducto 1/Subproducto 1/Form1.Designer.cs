@@ -85,6 +85,7 @@
             // 
             // TextBox_Analizador
             // 
+            TextBox_Analizador.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             TextBox_Analizador.Location = new Point(12, 11);
             TextBox_Analizador.Multiline = true;
             TextBox_Analizador.Name = "TextBox_Analizador";
@@ -93,6 +94,7 @@
             // 
             // textBox1
             // 
+            textBox1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.Location = new Point(450, 161);
             textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Multiline = true;
@@ -113,6 +115,7 @@
             // 
             // textBox2
             // 
+            textBox2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             textBox2.Location = new Point(838, 161);
             textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Multiline = true;
@@ -131,6 +134,7 @@
             Controls.Add(TextBox_Analizador);
             Controls.Add(dataGridTokens);
             Controls.Add(Boton_Ingresar);
+            MaximizeBox = false;
             Name = "Analizador";
             Text = "Analizador";
             ((System.ComponentModel.ISupportInitialize)dataGridTokens).EndInit();
