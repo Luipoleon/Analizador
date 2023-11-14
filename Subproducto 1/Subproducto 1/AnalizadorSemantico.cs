@@ -37,6 +37,8 @@ namespace Subproducto_1
         #region ValorDeSimboloEsNulo
         public bool ValorDeSimboloEsNulo(string id, int linea)
         {
+            float value;
+            if (float.TryParse(id, out value)) return true;
             string valor = GetSimbolo(id)?.Valor ?? null; 
             if (valor == null)
             {

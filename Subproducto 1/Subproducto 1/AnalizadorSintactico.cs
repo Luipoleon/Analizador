@@ -165,7 +165,7 @@ namespace Subproducto_1
                         return errores;
                     }
                     #endregion
-                    #region If
+                #region If
                 }
                 else if (lexico[i].Valor == 1)
                 {
@@ -188,7 +188,11 @@ namespace Subproducto_1
                                     Token lexico2 = lexico[i];
                                     #endregion
                                     #region Comparar tipos de Valores Semántico
-                                    analizadorSemantico.VerificarTiposIguales(lexico1, lexico2, linea);
+                                    if(analizadorSemantico.VerificarTiposIguales(lexico1, lexico2, linea))
+                                    {
+                                        analizadorSemantico.ValorDeSimboloEsNulo(lexico1.Lexema, linea);
+                                        analizadorSemantico.ValorDeSimboloEsNulo(lexico2.Lexema, linea);
+                                    }
                                     #endregion
 
                                     i++;
