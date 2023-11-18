@@ -40,7 +40,8 @@
         FIN_DE_CADENA,//21
 
         // Tipo de dato
-        TIPO_DATO //22
+        TIPO_DATO, //22
+        CHAR
     }
 
     #endregion

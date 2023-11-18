@@ -51,8 +51,8 @@ namespace Subproducto_1
                                     if (tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
                                     {
                                         string[] tiposValidos = { "int" };
-                                        if (analizadorSemantico.VerificarID(valorAsignado, linea, tiposValidos)){
-                                            analizadorSemantico.AgregarSimbolo(id,"int",valorAsignado,linea);
+                                        if (analizadorSemantico.VerificarID(valorAsignado, linea, tiposValidos)) {
+                                            analizadorSemantico.AgregarSimbolo(id, "int", valorAsignado, linea);
                                         }
                                     }
                                     else
@@ -112,7 +112,7 @@ namespace Subproducto_1
                         {
                             i++;
                             if (lexico[i].Valor == (int)TokenType.DECIMAL ||
-                                lexico[i].Valor ==  (int)TokenType.IDENTIFICADOR)
+                                lexico[i].Valor == (int)TokenType.IDENTIFICADOR)
                             {
                                 #region Variables semántico valor asignado y tipo ID o FLOAT
                                 int tipoValorAsignado = lexico[i].Valor;
@@ -165,7 +165,73 @@ namespace Subproducto_1
                         return errores;
                     }
                     #endregion
-                #region If
+                    #region If
+                }else if (lexico[i].Lexema=="char")
+                {
+                    i++;
+                    #region Variable semántico id 
+                    string id = lexico[i].Lexema;
+                    #endregion
+                    if (lexico[i].Valor == 17)
+                    {
+                        i++;
+                        if (lexico[i].Lexema == "=")
+                        {
+                            i++;
+                            if (lexico[i].Valor == 23 || lexico[i].Valor == 17)
+                            {
+                                #region Variables semántico valor asignado y tipo ID o FLOAT
+                                int tipoValorAsignado = lexico[i].Valor;
+                                string valorAsignado = lexico[i].Lexema;
+                                #endregion
+                                i++;
+                                if (lexico[i].Valor == 21)
+                                {
+                                    #region Verificación semántica
+                                    if (tipoValorAsignado == (int)TokenType.IDENTIFICADOR)
+                                    {
+                                        string[] tiposValidos = { "char" };
+                                        if (analizadorSemantico.VerificarID(valorAsignado, linea, tiposValidos))
+                                        {
+                                            analizadorSemantico.AgregarSimbolo(id, "char", valorAsignado, linea);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        analizadorSemantico.AgregarSimbolo(id, "char", valorAsignado, linea);
+                                    }
+                                    #endregion
+                                    linea++;
+
+                                }
+                                else
+                                {
+                                    pila.Push(linea.ToString());
+                                    pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                    return errores;
+                                }
+                            }
+                            else
+                            {
+                                pila.Push(linea.ToString());
+                                pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                return errores;
+                            }
+                        }
+                        else
+                        {
+                            pila.Push(linea.ToString());
+                            pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                            return errores;
+                        }
+                    }
+                    else
+                    {
+                        pila.Push(linea.ToString());
+                        pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                        return errores;
+                    }
+                    
                 }
                 else if (lexico[i].Valor == 1)
                 {

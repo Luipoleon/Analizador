@@ -33,6 +33,7 @@ namespace analizador
             { (int)TokenType.FIN_DE_ARCHIVO, "EOF" },
             { (int)TokenType.FIN_DE_CADENA, "FIN DE CADENA" },
             { (int)TokenType.TIPO_DATO, "TIPO DE DATO" },
+            { (int)TokenType.CHAR, "CHAR" }
         };
 
 
@@ -116,7 +117,7 @@ namespace analizador
                         if (token.Valor == 0)
                         {
                             string lexema = token.Lexema.ToUpper();
-                            if (lexema == "INT" || lexema == "FLOAT" || lexema == "STRING" || lexema == "BOOL")
+                            if (lexema == "INT" || lexema == "FLOAT" || lexema == "STRING" || lexema == "BOOL" || lexema=="CHAR")
                             {
                                 token.Valor = (int)TokenType.TIPO_DATO;
                                 Console.WriteLine("lexema");
@@ -134,6 +135,7 @@ namespace analizador
                         #endregion
 
                     }
+                  
                     else if (Regex.IsMatch(input[i].ToString(), @"[%/+*-]"))
                     {
                         #region OPERADORES ARITMÉTICOS
@@ -234,6 +236,20 @@ namespace analizador
                         token.Lexema += input[i];
                         token.Valor = (int)TokenType.COMA;
                         #endregion
+                    }
+                    else if (input[i].Equals('\''))
+                    {
+                        token.Lexema += input[i];
+                        i++;
+                        token.Lexema += input[i];
+                        i++;
+                        token.Lexema += input[i];
+                        //i++;
+                        if (input[i].Equals('\''))
+                        {
+                            token.Valor = (int)TokenType.CHAR;
+                        }
+
                     }
                     #endregion
                     #region FIN DE LINEA

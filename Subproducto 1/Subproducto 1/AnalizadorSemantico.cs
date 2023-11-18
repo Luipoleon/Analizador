@@ -94,7 +94,7 @@ namespace Subproducto_1
         #region VerificarTiposIguales
         public bool VerificarTiposIguales(Token lexico1, Token lexico2, int linea)
         {
-            string[] tiposValidos = { "float", "int" };
+            string[] tiposValidos = { "float", "int", "char" };
             if(lexico1.Valor == (int)TokenType.IDENTIFICADOR)
             {
                 if(!VerificarID(lexico1.Lexema, linea, tiposValidos)) return false;
