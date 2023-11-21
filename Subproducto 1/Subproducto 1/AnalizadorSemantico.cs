@@ -104,9 +104,16 @@ namespace Subproducto_1
                 if (!VerificarID(lexico2.Lexema, linea, tiposValidos)) return false;
             }
 
+
             string tipo1 = GetTipo(lexico1);
             string tipo2 = GetTipo(lexico2);
 
+            if(tipo1 == "char" || tipo2 == "char")
+            {
+                AgregarError(linea, "Suma de char no es válida");
+                return false;
+            }
+           
             if (tipo1 == tipo2) return true;
             
             AgregarError(linea, "Tipo de dato inválido " + tipo1 + " diferente a " + tipo2);
