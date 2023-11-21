@@ -33,7 +33,7 @@ namespace analizador
             { (int)TokenType.FIN_DE_ARCHIVO, "EOF" },
             { (int)TokenType.FIN_DE_CADENA, "FIN DE CADENA" },
             { (int)TokenType.TIPO_DATO, "TIPO DE DATO" },
-            { (int)TokenType.CHAR, "CHAR" }
+            { (int)TokenType.CHAR, "CARÁCTER" }
         };
 
 
@@ -117,7 +117,7 @@ namespace analizador
                         if (token.Valor == 0)
                         {
                             string lexema = token.Lexema.ToUpper();
-                            if (lexema == "INT" || lexema == "FLOAT" || lexema == "STRING" || lexema == "BOOL" || lexema=="CHAR")
+                            if (lexema == "INT" || lexema == "FLOAT" || lexema == "STRING" || lexema == "BOOL" || lexema == "CHAR")
                             {
                                 token.Valor = (int)TokenType.TIPO_DATO;
                                 Console.WriteLine("lexema");

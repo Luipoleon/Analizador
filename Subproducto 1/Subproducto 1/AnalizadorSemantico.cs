@@ -208,9 +208,13 @@ namespace Subproducto_1
                 {
                     tipo = "int";
                 }
-                else
+                else if (lexico.Valor == (int)TokenType.DECIMAL)
                 {
                     tipo = "float";
+                }
+                else
+                {
+                    tipo = "char";
                 }
 
                 return tipo;

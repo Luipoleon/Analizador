@@ -164,9 +164,10 @@ namespace Subproducto_1
                         pila.Push("Se esperaba un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
                         return errores;
                     }
-                    #endregion
-                    #region If
-                }else if (lexico[i].Lexema=="char")
+                }
+                #endregion
+                #region Char
+                else if (lexico[i].Lexema=="char")
                 {
                     i++;
                     #region Variable semántico id 
@@ -175,7 +176,14 @@ namespace Subproducto_1
                     if (lexico[i].Valor == 17)
                     {
                         i++;
-                        if (lexico[i].Lexema == "=")
+                        if (lexico[i].Lexema == ";")
+                        {
+                            #region Agregar símbolo
+                            analizadorSemantico.AgregarSimbolo(id, "char", null, linea);
+                            #endregion
+                            linea++;
+                        }
+                        else if (lexico[i].Lexema == "=")
                         {
                             i++;
                             if (lexico[i].Valor == 23 || lexico[i].Valor == 17)
@@ -233,6 +241,8 @@ namespace Subproducto_1
                     }
                     
                 }
+                #endregion
+                #region If
                 else if (lexico[i].Valor == 1)
                 {
                     i++;
@@ -346,7 +356,8 @@ namespace Subproducto_1
                         if (
                            lexico[i].Valor == (int)TokenType.ENTERO ||
                            lexico[i].Valor == (int)TokenType.IDENTIFICADOR ||
-                           lexico[i].Valor == (int)TokenType.DECIMAL
+                           lexico[i].Valor == (int)TokenType.DECIMAL ||
+                           lexico[i].Valor == (int)TokenType.CHAR
                            )
                         {
                             i++;
