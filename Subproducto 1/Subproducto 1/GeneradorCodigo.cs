@@ -228,7 +228,12 @@ namespace Subproducto_1
             cadena += "MOV " + a + ",AX\n";
             return cadena;
         }
-
+        public static string Logico(string a, string b)
+        {
+            string cadena = "MOV AX,"+ a +"\n";
+            cadena += "CMP AX," + b + "\n";
+            return cadena;
+        }
         #endregion
 
         #endregion
