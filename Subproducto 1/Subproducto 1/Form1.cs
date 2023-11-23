@@ -39,6 +39,8 @@ namespace Subproducto_1
             UpdateErrorText(pilaSemantico, textBox1);
             UpdateErrorText2(pilaSintactico, textBox2);
 
+            GeneradorCodigo.GenerarCodigo(listTokens);
+
         }
 
         private void UpdateErrorText(Stack<string> pila, TextBox textBox)
