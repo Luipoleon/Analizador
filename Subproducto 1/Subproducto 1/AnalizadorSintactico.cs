@@ -351,9 +351,6 @@ namespace Subproducto_1
                     if (lexico[i].Valor == (int)TokenType.OPERADOR_ASIGNACION)
                     {
                         i++;
-                        #region Variable léxico 1 Semántico
-                        Token lexico1 = lexico[i];
-                        #endregion
                         if (
                            lexico[i].Valor == (int)TokenType.ENTERO ||
                            lexico[i].Valor == (int)TokenType.IDENTIFICADOR ||
@@ -361,6 +358,9 @@ namespace Subproducto_1
                            lexico[i].Valor == (int)TokenType.CHAR
                            )
                         {
+                            #region Variable léxico 1 Semántico
+                            Token lexico1 = lexico[i];
+                            #endregion
                             i++;
                             if (lexico[i].Valor == (int)TokenType.FIN_DE_CADENA)
                             {
@@ -436,6 +436,54 @@ namespace Subproducto_1
                         }
                     }
                     else
+                    if (lexico[i].Valor == (int)TokenType.OPERADOR_ARITMETICO ||
+                        lexico[i].Valor == (int)TokenType.OPERADOR_RELACIONAL)
+                    {
+                        #region Variable Operador Semántico
+                        string operador = lexico[i].Lexema;
+                        #endregion
+                        i++;
+                        if (
+                             lexico[i].Valor == (int)TokenType.ENTERO ||
+                             lexico[i].Valor == (int)TokenType.IDENTIFICADOR ||
+                             lexico[i].Valor == (int)TokenType.DECIMAL
+                           )
+                        {
+                            #region Variable léxico 2 Semántico
+                            Token lexico2 = lexico[i];
+                            #endregion
+                            i++;
+                            if (lexico[i].Valor == (int)TokenType.FIN_DE_CADENA)
+                            {
+                                #region Verificar tipos de datos iguales e id
+
+                                if (analizadorSemantico.VerificarTiposIguales(lexicoID, lexico2, linea)
+                                    )
+                                {
+                                    analizadorSemantico.ValorDeSimboloEsNulo(lexicoID.Lexema, linea);
+                                    analizadorSemantico.ValorDeSimboloEsNulo(lexico2.Lexema, linea);
+
+                                }
+                                #endregion
+                                linea++;
+                            }
+                            else
+                            {
+                                pila.Push(linea.ToString());
+                                pila.Push("Se esperaba el lexema: ;\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                return errores;
+                            }
+
+                        }
+                        else
+                        {
+                            pila.Push(linea.ToString());
+                            pila.Push("Se esperaba un numero entero, decimal o un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                            return errores;
+                        }
+
+                    }
+                    else
                     {
                         pila.Push(linea.ToString());
                         pila.Push("Se esperaba un operador  de asignación. \n En su lugar se obtuvo: " + lexico[i].Lexema);
@@ -443,10 +491,77 @@ namespace Subproducto_1
                     }
                 }
                 #endregion
+                #region Aritméticos y Relacionales
+                else if (
+                         lexico[i].Valor == (int)TokenType.ENTERO ||
+                         lexico[i].Valor == (int)TokenType.DECIMAL
+                         )
+                {
+                    #region Variable léxico 1 Semántico
+                    Token lexico1 = lexico[i];
+                    #endregion
+                    i++;
+                 
+                    if (lexico[i].Valor == (int)TokenType.OPERADOR_ARITMETICO ||
+                        lexico[i].Valor == (int)TokenType.OPERADOR_RELACIONAL)
+                    {
+                        #region Variable Operador Semántico
+                        string operador = lexico[i].Lexema;
+                        #endregion
+                        i++;
+                        if (
+                             lexico[i].Valor == (int)TokenType.ENTERO ||
+                             lexico[i].Valor == (int)TokenType.IDENTIFICADOR ||
+                             lexico[i].Valor == (int)TokenType.DECIMAL
+                           )
+                        {
+                            #region Variable léxico 2 Semántico
+                            Token lexico2 = lexico[i];
+                            #endregion
+                            i++;
+                            if (lexico[i].Valor == (int)TokenType.FIN_DE_CADENA)
+                            {
+                                #region Verificar tipos de datos iguales e id
+
+                                if (analizadorSemantico.VerificarTiposIguales(lexico1,lexico2, linea)
+                                    )
+                                {
+                                    analizadorSemantico.ValorDeSimboloEsNulo(lexico1.Lexema, linea);
+                                    analizadorSemantico.ValorDeSimboloEsNulo(lexico2.Lexema, linea);
+  
+                                }
+                                #endregion
+                                linea++;
+                            }
+                            else
+                            {
+                                pila.Push(linea.ToString());
+                                pila.Push("Se esperaba el lexema: ;\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                                return errores;
+                            }
+
+                        }
+                        else
+                        {
+                            pila.Push(linea.ToString());
+                            pila.Push("Se esperaba un numero entero, decimal o un identificador\n En su lugar se obtuvo: " + lexico[i].Lexema);
+                            return errores;
+                        }
+
+                    }
+                    else
+                    {
+                        pila.Push(linea.ToString());
+                        pila.Push("Se esperaba un operador " + lexico[i].Lexema);
+                        return errores;
+                    }
+
+                }
+                #endregion
 
             }
 
-          
+
             return errores;
             #endregion
 

@@ -35,12 +35,19 @@ namespace Subproducto_1
             Stack<string>[] errores = AnalizadorSintactico.Sintactico(listTokens);
             Stack<string> pilaSemantico = errores[0];
             Stack<string> pilaSintactico = errores[1];
+            List<string> codigoFinal;
+
 
             UpdateErrorText(pilaSemantico, textBox1);
             UpdateErrorText2(pilaSintactico, textBox2);
 
-            GeneradorCodigo.GenerarCodigo(listTokens);
+            if (pilaSemantico.Count !=  0 ||  pilaSintactico.Count != 0)
+            {
+                return;
+            }
 
+            codigoFinal = GeneradorCodigo.GenerarCodigo(listTokens);
+         
         }
 
         private void UpdateErrorText(Stack<string> pila, TextBox textBox)

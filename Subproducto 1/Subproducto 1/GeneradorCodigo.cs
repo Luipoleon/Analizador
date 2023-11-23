@@ -25,12 +25,16 @@ namespace Subproducto_1
             {
                 Token token = colaTokens.Dequeue();
                 elemento.Add(token);
-                if(token.Lexema.Equals(";"))
+                if(token.Lexema.Equals(";") || token.Lexema.Equals("{"))
                 {
                     dict = IdentificarValoresElemento(elemento);
                     elementosConvertidos.Add(ConvertirElemento(dict));
                     elemento.Clear();
                     dict.Clear();
+                }
+                else if (token.Lexema.Equals("}"))
+                {
+
                 }
             }
 
@@ -81,6 +85,10 @@ namespace Subproducto_1
             {
                 if(t.Lexema.Equals("=")) tipos.Add("=");
                 if (t.Valor == (int)TokenType.TIPO_DATO) tipos.Add("declaracion");
+                if (t.Valor == (int)TokenType.OPERADOR_RELACIONAL) tipos.Add("logico");
+                if (t.Lexema == "if") tipos.Add("if");
+                if (t.Lexema == "{") tipos.Add("inicio_bloque");
+                if (t.Lexema == "}") tipos.Add("fin_bloque");
                 if (t.Lexema.Equals("+")) tipos.Add("+");
                 if (t.Lexema.Equals("-")) tipos.Add("-");
                 if (t.Lexema.Equals("*")) tipos.Add("*");
@@ -119,14 +127,34 @@ namespace Subproducto_1
                 case "declaracion_=":
                     break;
                 case "=":
+                    conversion = Asignar(dict["valor-1"], dict["valor-2"]);
                     break;
                 case "=_+":
+                    conversion = Sumar(dict["valor-1"], dict["valor-2"], dict["valor-3"]);
                     break;
                 case "=_*":
+                    conversion = Multiplicar(dict["valor-1"], dict["valor-2"], dict["valor-3"]);
                     break;
                 case "=_-":
+                    conversion = Restar(dict["valor-1"], dict["valor-2"], dict["valor-3"]);
                     break;
                 case "=_/":
+                    conversion = Dividir(dict["valor-1"], dict["valor-2"], dict["valor-3"]);
+                    break;
+                case "+":
+                    conversion = Sumar(dict["valor-1"], dict["valor-2"]);
+                    break;
+                case "*":
+                    conversion = Multiplicar(dict["valor-1"], dict["valor-2"]);
+                    break;
+                case "-":
+                    conversion = Restar(dict["valor-1"], dict["valor-2"]);
+                    break;
+                case "/":
+                    conversion = Dividir(dict["valor-1"], dict["valor-2"]);
+                    break;
+                case "logico":
+                    conversion = Logico(dict["valor-1"], dict["valor-2"]);
                     break;
             }
             return conversion;
