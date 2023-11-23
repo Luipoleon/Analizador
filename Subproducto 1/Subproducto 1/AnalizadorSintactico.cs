@@ -8,6 +8,7 @@ namespace Subproducto_1
         public static Stack<string>[] Sintactico(List<Token> lexico)
         {
             Stack<string> pila = new Stack<string>();
+         
             AnalizadorSemantico analizadorSemantico = new AnalizadorSemantico();
             Stack<string>[] errores = new Stack<string>[2];
             errores[0] = pila;

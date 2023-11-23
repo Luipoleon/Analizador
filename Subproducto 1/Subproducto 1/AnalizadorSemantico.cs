@@ -7,6 +7,7 @@ namespace Subproducto_1
         private List<Simbolo> tablaSimbolos;
         private Stack<string> pilaErrores;
 
+
         public AnalizadorSemantico()
         {
             tablaSimbolos = new List<Simbolo>();
