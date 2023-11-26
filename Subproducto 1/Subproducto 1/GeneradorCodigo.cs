@@ -1,6 +1,7 @@
 ﻿using analizador;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 
 
 namespace Subproducto_1
@@ -19,9 +20,10 @@ namespace Subproducto_1
             List <Token> elemento  = new List<Token>();
             Dictionary<string, string> dict;
             List<string> elementosConvertidos = new List<string>();
-            
+
             // 3) Convertir elementos
-            while(colaTokens.Count > 0 )
+            elementosConvertidos.Add(Inicio());
+            while (colaTokens.Count > 0 )
             {
                 Token token = colaTokens.Dequeue();
                 elemento.Add(token);
@@ -37,6 +39,7 @@ namespace Subproducto_1
 
                 }
             }
+            elementosConvertidos.Add(Fin());
 
             return elementosConvertidos;
             
@@ -124,7 +127,11 @@ namespace Subproducto_1
             string conversion = "";
             switch (dict["tipo"])
             {
+                case "declaracion":
+                    conversion = Declarar(dict["valor-1"]);
+                    break;
                 case "declaracion_=":
+                    conversion = Declarar(dict["valor-1"], dict["valor-2"]);
                     break;
                 case "=":
                     conversion = Asignar(dict["valor-1"], dict["valor-2"]);
@@ -177,90 +184,104 @@ namespace Subproducto_1
         #region Conversiones
         public static string Inicio()
         {
-            string cadena = ".CODE\n";
+            string cadena = ".CODE\r\n";
             return cadena;
         }
         public static string Fin()
         {
-            string cadena = "END\n";
+            string cadena = "END\r\n";
             return cadena;
         }
         public static string Sumar(string a, string b)
         {
             string cadena = "";
-            cadena += "MOV AX," + a + "\n";
-            cadena += "ADD AX," + b + "\n";
-            cadena += "MOV [100], AX\n";
+            cadena += "MOV AX," + a + "\r\n";
+            cadena += "ADD AX," + b + "\r\n";
+            cadena += "MOV [100], AX\r\n";
             return cadena;
         }
         public static string Sumar(string a, string b, string c)
         {
             string cadena = "";
-            cadena += "MOV AX," + b + "\n";
-            cadena += "ADD AX," + c + "\n";
-            cadena += "MOV " + a + ", AX\n";
+            cadena += "MOV AX," + b + "\r\n";
+            cadena += "ADD AX," + c + "\r\n";
+            cadena += "MOV " + a + ", AX\r\n";
             return cadena;
         }
         public static string Restar(string a, string b)
         {
             string cadena = "";
-            cadena += "MOV AX," + a + "\n";
-            cadena += "SUB AX," + b + "\n";
-            cadena += "MOV [100], AX\n";
+            cadena += "MOV AX," + a + "\r\n";
+            cadena += "SUB AX," + b + "\r\n";
+            cadena += "MOV [100], AX\r\n";
             return cadena;
         }
         public static string Restar(string a, string b, string c)
         {
             string cadena = "";
-            cadena += "MOV AX," + b + "\n";
-            cadena += "SUB AX," + c + "\n";
-            cadena += "MOV " + a + ", AX\n";
+            cadena += "MOV AX," + b + "\r\n";
+            cadena += "SUB AX," + c + "\r\n";
+            cadena += "MOV " + a + ", AX\r\n";
             return cadena;
         }
         public static string Dividir(string a, string b)
         {
             string cadena = "";
-            cadena += "MOV AX," + a + "\n";
-            cadena += "DIV AX," + b + "\n";
-            cadena += "MOV [100], AX\n";
+            cadena += "MOV AX," + a + "\r\n";
+            cadena += "DIV AX," + b + "\r\n";
+            cadena += "MOV [100], AX\r\n";
             return cadena;
         }
         public static string Dividir(string a, string b, string c)
         {
             string cadena = "";
-            cadena += "MOV AX," + b + "\n";
-            cadena += "DIV AX," + c + "\n";
-            cadena += "MOV " + a + ", AX\n";
+            cadena += "MOV AX," + b + "\r\n";
+            cadena += "DIV AX," + c + "\r\n";
+            cadena += "MOV " + a + ", AX\r\n";
             return cadena;
         }
         public static string Multiplicar(string a, string b)
         {
             string cadena = "";
-            cadena += "MOV AX," + a + "\n";
-            cadena += "MUL AX," + b + "\n";
-            cadena += "MOV [100], AX\n";
+            cadena += "MOV AX," + a + "\r\n";
+            cadena += "MUL AX," + b + "\r\n";
+            cadena += "MOV [100], AX\r\n";
             return cadena;
         }
         public static string Multiplicar(string a, string b, string c)
         {
             string cadena = "";
-            cadena += "MOV AX," + b + "\n";
-            cadena += "MUL AX," + c + "\n";
-            cadena += "MOV " + a + ", AX\n";
+            cadena += "MOV AX," + b + "\r\n";
+            cadena += "MUL AX," + c + "\r\n";
+            cadena += "MOV " + a + ", AX\r\n";
+            return cadena;
+        }
+
+        public static string Declarar(string a)
+        {
+            string cadena = "";
+            cadena += a + " db 8\r\n";
+            return cadena;
+        }
+
+        public static string Declarar(string a, string b)
+        {
+            string cadena = "";
+            cadena += a + " db 8\r\n";
+            cadena += Asignar(a, b);
             return cadena;
         }
         public static string Asignar(string a, string b)
         {
             string cadena = "";
-            cadena += a + " db 4\n";
-            cadena += "MOV AX, " + b + "\n";
-            cadena += "MOV " + a + ",AX\n";
+            cadena += "MOV AX, " + b + "\r\n";
+            cadena += "MOV " + a + ",AX\r\n";
             return cadena;
         }
         public static string Logico(string a, string b)
         {
-            string cadena = "MOV AX,"+ a +"\n";
-            cadena += "CMP AX," + b + "\n";
+            string cadena = "MOV AX,"+ a +"\r\n";
+            cadena += "CMP AX," + b + "\r\n";
             return cadena;
         }
         #endregion

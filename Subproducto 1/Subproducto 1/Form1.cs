@@ -41,15 +41,24 @@ namespace Subproducto_1
             UpdateErrorText(pilaSemantico, textBox1);
             UpdateErrorText2(pilaSintactico, textBox2);
 
-            if (pilaSemantico.Count !=  0 ||  pilaSintactico.Count != 0)
+            if (pilaSemantico.Count != 0 || pilaSintactico.Count != 0)
             {
                 return;
             }
 
             codigoFinal = GeneradorCodigo.GenerarCodigo(listTokens);
-         
+            UpdateGeneratedCode(codigoFinal, textBox3);
+
         }
 
+        private void UpdateGeneratedCode(List<string> codigoFinal, TextBox textBox)
+        {
+            textBox.Text = "";
+            foreach (string codigo in codigoFinal)
+            {
+                textBox.Text += codigo;
+            }
+        }
         private void UpdateErrorText(Stack<string> pila, TextBox textBox)
         {
             textBox.Text.Trim();
