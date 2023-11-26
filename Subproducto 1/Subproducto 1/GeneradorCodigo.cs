@@ -184,12 +184,12 @@ namespace Subproducto_1
         #region Conversiones
         public static string Inicio()
         {
-            string cadena = ".CODE\r\n";
+            string cadena = ".CODE\r\n\r\n";
             return cadena;
         }
         public static string Fin()
         {
-            string cadena = "END\r\n";
+            string cadena = "\r\nEND";
             return cadena;
         }
         public static string Sumar(string a, string b)
