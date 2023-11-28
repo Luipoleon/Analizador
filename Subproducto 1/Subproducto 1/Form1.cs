@@ -36,12 +36,13 @@ namespace Subproducto_1
             Stack<string> pilaSemantico = errores[0];
             Stack<string> pilaSintactico = errores[1];
             List<string> codigoFinal;
-
+            int erroresSemantico = pilaSemantico.Count;
+            int erroresSintactico = pilaSintactico.Count;
 
             UpdateErrorText(pilaSemantico, textBox1);
             UpdateErrorText2(pilaSintactico, textBox2);
 
-            if (pilaSemantico.Count != 0 || pilaSintactico.Count != 0)
+            if (erroresSemantico != 0 || erroresSintactico != 0)
             {
                 return;
             }

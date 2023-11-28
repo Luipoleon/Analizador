@@ -109,6 +109,7 @@ namespace Subproducto_1
                 token.Valor == (int)TokenType.IDENTIFICADOR ||
                 token.Valor == (int)TokenType.ENTERO ||
                 token.Valor == (int)TokenType.DECIMAL
+                || token.Valor == (int) TokenType.CHAR
              
             )
             {
